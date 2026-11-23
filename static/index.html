@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f5f7">
+  <meta name="description" content="链种工坊 LinkSeed - 自托管的 ED2K、BT 种子、磁力链与推送工具">
+  <title>链种工坊 · LinkSeed</title>
+  <script src="/theme-init.js"></script>
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true">
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 0 0-7.07-7.07L10.7 5.23"/><path d="M14 11a5 5 0 0 0-7.07 0L4.8 13.12a5 5 0 0 0 7.07 7.07l1.41-1.41"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-archive" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 3v5M12 8v3M9.5 11h5v4h-5zM10 18h4"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 8-5 4 5 4M16 8l5 4-5 4M13.5 4l-3 16"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 6h16M9 6V4h6v2M6 6l1 14h10l1-14"/><path d="M10 10v6M14 10v6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></symbol>
+  <symbol id="i-import" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V3"/><path d="m7 8 5-5 5 5"/><path d="M4 21h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2c-.8.6-1.5 1.2-1.5 2.3"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M12 13v8"/><path d="m8 17 4-4 4 4"/><path d="M20 16.7A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"/></symbol>
+  <symbol id="i-magnet" viewBox="0 0 24 24"><path d="m6 15-4-4 6.75-6.77a7.79 7.79 0 0 1 11 11L13 22l-4-4 6.39-6.36a2.14 2.14 0 0 0-3-3L6 15"/><path d="m5 8 4 4"/><path d="m12 15 4 4"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 6h9M18 6h2M4 12h4M13 12h7M4 18h10M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+  <symbol id="i-export" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><path d="M4 21h16"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.5 6.5 0 0 0 9.8 9.8z"/></symbol>
+  <symbol id="i-auto" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+</svg>
+
+<div class="ambient" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#i-link"/></svg></span>
+      <span class="brand-text"><strong>链种工坊</strong><small>LinkSeed · 链接与种子</small></span>
+    </div>
+    <div class="segmented" role="tablist" aria-label="功能切换">
+      <button class="seg-btn is-active" type="button" data-tab="ed2k" role="tab" aria-selected="true" title="查看已添加文件的 ED2K 链接">ED2K 链接</button>
+      <button class="seg-btn" type="button" data-tab="make" role="tab" aria-selected="false" title="从文件或目录制作 BT 种子">制作种子</button>
+      <button class="seg-btn" type="button" data-tab="parse" role="tab" aria-selected="false" title="解析 .torrent 文件并匹配 ED2K 链接">解析种子</button>
+      <button class="seg-btn" type="button" data-tab="edit" role="tab" aria-selected="false" title="编辑种子的 Tracker、名称、注释等元数据">编辑种子</button>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="settingsBtn" type="button" title="设置" aria-label="设置"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg></button>
+      <button class="icon-btn" id="themeBtn" type="button" title="切换主题" aria-label="切换主题"><svg class="icon" aria-hidden="true"><use href="#i-auto"/></svg></button>
+      <button class="icon-btn" id="helpBtn" type="button" title="快捷键与帮助" aria-label="快捷键与帮助"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg></button>
+      <button class="icon-btn" id="logoutBtn" type="button" title="退出登录" aria-label="退出登录" hidden><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main class="app">
+  <section class="view" id="view-ed2k">
+    <div class="page-head">
+      <div class="page-title">
+        <h1>文件生成 ED2K 链接</h1>
+        <p>上传文件或整个文件夹，后台自动计算 MD4 哈希，批量得到标准 eD2K 链接。</p>
+      </div>
+      <div class="head-actions">
+        <button class="btn btn-ghost" id="importLinkBtn" type="button" title="粘贴 ED2K 链接或磁力链导入"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>导入链接</button>
+        <button class="btn btn-ghost" id="browseServerBtn" type="button" title="浏览服务器上的目录并添加文件"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>服务器目录</button>
+        <button class="btn btn-secondary" id="addFolderBtn" type="button" title="添加服务器上的整个文件夹"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg>文件夹</button>
+        <button class="btn btn-primary" id="addFilesBtn" type="button" title="从本机上传文件"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>添加文件</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-label">文件</span>
+        <span class="stat-value" id="statFiles">0</span>
+        <span class="stat-sub" id="statFilesSub">等待添加</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">总大小</span>
+        <span class="stat-value" id="statSize">0 B</span>
+        <span class="stat-sub" id="statSizeSub">支持大文件分片续传</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">已生成链接</span>
+        <span class="stat-value" id="statLinks">0</span>
+        <span class="stat-sub" id="statLinksSub">后台异步计算</span>
+      </div>
+    </div>
+
+    <div class="parse-notice page-notice is-info">
+      <svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>
+      <div>
+        <strong>云端「离线下载」需要对方服务器上已有同一文件</strong>
+        <span>离线能否成功，取决于云端是否已有哈希一致的同一文件；没有就只能等待或失败。本工具不会上传文件到云端。</span>
+      </div>
+    </div>
+
+    <div class="card" id="filesCard">
+      <div class="card-head">
+        <label class="checkbox select-all" title="全选 / 取消全选">
+          <input type="checkbox" id="selectAll">
+          <span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="select-label">全选</span>
+        </label>
+        <span class="card-count" id="fileCount">0 个文件</span>
+      </div>
+
+      <div class="file-list" id="fileList" aria-live="polite"></div>
+    </div>
+
+    <div class="card history-card" id="historyCard" hidden>
+      <div class="card-head">
+        <h2 class="card-title">历史记录 <span class="count-pill" id="historyCount">0</span></h2>
+        <div class="card-tools">
+          <button class="tool-btn" id="historyAddAllBtn" type="button" title="把历史中全部文件加入当前列表">全部加入</button>
+        </div>
+      </div>
+      <p class="history-hint">这些文件在「制作种子」等模块添加过，可直接加入，无需重新上传。</p>
+      <div class="history-list" id="historyList"></div>
+    </div>
+
+    <div class="card imported-card" id="importedCard" hidden>
+      <div class="card-head">
+        <h2 class="card-title">导入的链接 <span class="count-pill" id="importedCount">0</span></h2>
+        <div class="card-tools">
+          <button class="tool-btn" id="copyImportedBtn" type="button" title="复制导入的链接">复制</button>
+          <button class="tool-btn" id="exportImportedBtn" type="button" title="导出导入的链接">导出</button>
+          <button class="tool-btn danger" id="clearImportedBtn" type="button" title="清空导入的链接">清空</button>
+        </div>
+      </div>
+      <div class="imported-list" id="importedList"></div>
+    </div>
+
+    <p class="footnote">所有文件仅保存在你的服务器上。ED2K 哈希由文件内容计算，修改文件名不会影响哈希值。</p>
+  </section>
+
+  <section class="view" id="view-make" hidden>
+    <div class="page-head">
+      <div class="page-title">
+        <h1>制作 BT 种子</h1>
+        <p>直接选择任意文件或文件夹生成 .torrent，无需先生成 ED2K 链接。</p>
+      </div>
+      <div class="head-actions">
+        <button class="btn btn-ghost" id="makeHistoryBtn" type="button" title="查看已生成的种子、磁力链与 ED2K 历史"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>历史</button>
+        <button class="btn btn-ghost" id="makeBrowseBtn" type="button" title="浏览服务器目录添加文件"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>服务器目录</button>
+        <button class="btn btn-secondary" id="makeAddFolderBtn" type="button" title="从本机选择整个文件夹加入种子"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg>文件夹</button>
+        <button class="btn btn-primary" id="makeAddFilesBtn" type="button" title="从本机选择文件加入种子"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>添加文件</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2 class="card-title">种子参数</h2>
+        <span class="count-pill" id="torrentSelectedCount">0 已选</span>
+      </div>
+
+      <div class="form">
+        <div class="form-row">
+          <label class="field" title="留空则自动取文件名或文件夹名；多文件种子会以该名称作为根目录">
+            <span>种子名称</span>
+            <input type="text" id="torrentName" placeholder="例如：我的资料合集" maxlength="200" autocomplete="off">
+          </label>
+          <label class="field" title="可选，写入种子的 comment 字段">
+            <span>注释</span>
+            <input type="text" id="torrentComment" placeholder="写入种子的 comment 字段" maxlength="200" autocomplete="off">
+          </label>
+        </div>
+
+        <div class="tracker-bar">
+          <span class="tracker-label"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>Tracker 服务器</span>
+          <span class="count-pill" id="trackerCount">未设置</span>
+          <span class="tracker-status" id="trackerStatus">公开种子可一键填入公共 Tracker</span>
+          <button class="mini-btn" type="button" id="fetchTrackersBtn" title="从 https://trackerslist.com/all.txt 更新公共 Tracker">更新 Tracker</button>
+        </div>
+        <textarea id="torrentTrackers" hidden spellcheck="false"></textarea>
+
+        <div class="option-grid">
+          <label class="field">
+            <span>分块大小<em id="torrentEstimate">预计 —</em></span>
+            <div class="select-menu" id="torrentPieceMenu" data-value="0">
+              <input type="hidden" id="torrentPiece" value="0">
+              <button type="button" class="select-trigger" id="torrentPieceBtn" aria-haspopup="listbox" aria-expanded="false"
+                title="固定分块大小，数值越大生成的种子文件越小，但兼容性略降">
+                <span id="torrentPieceLabel">自动（推荐）</span>
+                <svg class="icon select-caret" aria-hidden="true"><use href="#i-chevron"/></svg>
+              </button>
+              <div class="select-pop" id="torrentPiecePop" role="listbox" aria-label="分块大小" hidden>
+                <button type="button" class="select-option is-active" role="option" aria-selected="true" data-value="0">自动（推荐）</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="16384">16 KiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="32768">32 KiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="65536">64 KiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="131072">128 KiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="262144">256 KiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="524288">512 KiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="1048576">1 MiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="2097152">2 MiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="4194304">4 MiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="8388608">8 MiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="16777216">16 MiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="33554432">32 MiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="67108864">64 MiB</button>
+                <button type="button" class="select-option" role="option" aria-selected="false" data-value="134217728">128 MiB</button>
+              </div>
+            </div>
+          </label>
+          <label class="switch-field option-tile" title="写入 private 标记，禁用 DHT 与 PEX">
+            <span>私有种子</span>
+            <span class="switch-wrap">
+              <input type="checkbox" id="torrentPrivate" class="switch">
+              <span class="switch-track"></span>
+            </span>
+          </label>
+          <label class="switch-field option-tile" title="开启后生成种子时会自动计算并内嵌所选文件的 ED2K 链接；计算期间生成按钮暂停可用">
+            <span>内嵌 ED2K</span>
+            <span class="switch-wrap">
+              <input type="checkbox" id="torrentEmbedEd2k" class="switch" checked>
+              <span class="switch-track"></span>
+            </span>
+          </label>
+        </div>
+
+        <div class="picker" title="在下方列表中选择文件或文件夹加入种子，也可以从本机或服务器目录添加">
+          <div class="picker-list" id="torrentPicker"></div>
+        </div>
+
+        <div class="job" id="torrentJob" hidden></div>
+      </div>
+    </div>
+
+    <div class="card history-card" id="makeHistoryCard" hidden>
+      <div class="card-head">
+        <h2 class="card-title">历史记录 <span class="count-pill" id="makeHistoryCount">0</span></h2>
+        <div class="card-tools">
+          <button class="tool-btn" id="makeHistoryAddAllBtn" type="button" title="把历史中全部文件加入种子文件选择">全部加入</button>
+        </div>
+      </div>
+      <p class="history-hint">这些文件在「ED2K 链接」等模块添加过，可直接加入，无需重新上传。</p>
+      <div class="history-list" id="makeHistoryList"></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-parse" hidden>
+    <div class="page-head">
+      <div class="page-title">
+        <h1>解析 BT 种子</h1>
+        <p>导入 .torrent，按路径与大小匹配已添加文件，再计算对应的 ED2K 链接。</p>
+      </div>
+      <div class="head-actions">
+        <button class="btn btn-ghost" id="parseBrowseBtn" type="button" title="浏览服务器目录，批量选择 .torrent 解析"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>服务器目录</button>
+        <button class="btn btn-secondary" id="parseAddFolderBtn" type="button" title="选择文件夹，自动检测其中的 .torrent 并批量解析"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg>文件夹</button>
+        <button class="btn btn-primary" id="parseAddFilesBtn" type="button" title="选择种子或本机文件；种子会直接解析，其他文件用于匹配"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>添加文件</button>
+      </div>
+    </div>
+
+    <div class="card parse-card">
+      <div class="card-head">
+        <h2 class="card-title">导入种子</h2>
+        <span class="count-pill" id="parseCountPill">等待导入</span>
+      </div>
+      <div class="parse-notice">
+        <svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>
+        <div>
+          <strong>只有本工具生成（勾选「内嵌 ED2K」）的种子才能直接解析出 ED2K</strong>
+          <span>这类种子的元数据里保存了 ED2K 链接，删除原文件后仍可解析。其他来源的种子通常只有 SHA-1 分块哈希，本机必须有原文件才能得到 ED2K。</span>
+        </div>
+      </div>
+      <div id="torrentImportResult"></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-edit" hidden>
+    <div class="page-head">
+      <div class="page-title">
+        <h1>编辑 BT 种子</h1>
+        <p>载入一个种子可修改名称、注释、来源、私有标记与 Tracker；多个种子仅支持批量修改 Tracker。</p>
+      </div>
+      <div class="head-actions">
+        <button class="btn btn-ghost" id="editBrowseBtn" type="button" title="浏览服务器目录，载入 .torrent 文件"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>服务器目录</button>
+        <button class="btn btn-primary" id="editPickBtn" type="button" title="从本机选择一个或多个 .torrent 文件"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>选择种子</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2 class="card-title">已载入种子</h2>
+        <span class="count-pill" id="editCountPill">0 个</span>
+      </div>
+      <div class="picker">
+        <div class="picker-head">
+          <span class="picker-hint" id="editListHint">勾选需要编辑的种子；选中 1 个可完整编辑，多个仅批量改 Tracker</span>
+        </div>
+        <div class="picker-list" id="editList"></div>
+      </div>
+    </div>
+
+    <div class="card" id="editFormCard" hidden>
+      <div class="card-head">
+        <h2 class="card-title">编辑内容</h2>
+        <span class="count-pill" id="editModePill">单个种子</span>
+      </div>
+      <div class="form">
+        <div class="edit-tabs" role="tablist" aria-label="编辑视图">
+          <button class="edit-tab is-active" type="button" data-edit-tab="summary" role="tab" aria-selected="true" title="种子名称、注释、来源、私有标记与 Tracker">摘要</button>
+          <button class="edit-tab" type="button" data-edit-tab="files" role="tab" aria-selected="false" title="查看并修改种子内的文件路径">文件</button>
+          <button class="edit-tab" type="button" data-edit-tab="tree" role="tab" aria-selected="false" title="按树形结构编辑种子的 bencode 字段">树形结构</button>
+          <button class="edit-tab" type="button" data-edit-tab="raw" role="tab" aria-selected="false" title="编辑解码后的原始数据结构">原始数据</button>
+        </div>
+
+        <div class="edit-panel" data-edit-panel="summary">
+          <div class="form-row">
+            <label class="field" title="修改名称会改变 Info Hash，已做种的任务需要重新添加">
+              <span>种子名称</span>
+              <input type="text" id="editName" maxlength="200" autocomplete="off" placeholder="种子名称">
+            </label>
+            <label class="field" title="写入种子的 comment 字段，不影响 Info Hash">
+              <span>注释</span>
+              <input type="text" id="editComment" maxlength="200" autocomplete="off" placeholder="可选">
+            </label>
+          </div>
+
+          <div class="option-grid">
+            <label class="switch-field option-tile" title="私有种子会写入 private 标记，禁用 DHT 与 PEX；修改会改变 Info Hash">
+              <span>私有种子</span>
+              <span class="switch-wrap">
+                <input type="checkbox" id="editPrivate" class="switch">
+                <span class="switch-track"></span>
+              </span>
+            </label>
+            <label class="field" title="写入 info.source 字段，通常用于私有站点的来源标识；修改会改变 Info Hash">
+              <span>来源（Source）</span>
+              <input type="text" id="editSource" maxlength="100" autocomplete="off" placeholder="可选">
+            </label>
+          </div>
+
+          <div class="edit-meta-grid" id="editMetaGrid">
+            <div class="edit-meta"><span>分块大小</span><strong id="editPieceLength">—</strong></div>
+            <div class="edit-meta"><span>分块数</span><strong id="editPieceCount">—</strong></div>
+            <div class="edit-meta"><span>总大小</span><strong id="editTotalSize">—</strong></div>
+            <div class="edit-meta"><span>文件数</span><strong id="editFileCount">—</strong></div>
+            <div class="edit-meta wide"><span>Info Hash</span><code id="editInfoHash">—</code></div>
+            <div class="edit-meta"><span>创建工具</span><strong id="editCreatedBy">—</strong></div>
+          </div>
+
+          <div class="tracker-bar">
+            <span class="tracker-label"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg>Tracker 服务器</span>
+            <span class="count-pill" id="editTrackerCount">未设置</span>
+            <span class="tracker-status" id="editTrackerHint">每行一个 Tracker</span>
+          </div>
+          <textarea id="editTrackers" class="import-textarea" rows="6" spellcheck="false" title="每行一个 Tracker；批量编辑时覆盖所有所选种子"></textarea>
+        </div>
+
+        <div class="edit-panel" data-edit-panel="files" hidden>
+          <div class="edit-table-wrap">
+            <table class="edit-table">
+              <thead><tr><th>#</th><th>路径</th><th>大小</th><th>分块数</th></tr></thead>
+              <tbody id="editFilesBody"></tbody>
+            </table>
+          </div>
+          <div class="edit-files-foot">
+            <label class="edit-foot-field" title="种子分块大小，修改分块需要重新制作种子">分块大小<input type="text" id="editPieceLengthInput" readonly></label>
+            <label class="edit-foot-field" title="种子内文件总大小">总大小<input type="text" id="editTotalSizeInput" readonly></label>
+            <label class="edit-foot-field grow" title="多文件种子会以该名称作为根目录；修改会改变 Info Hash">种子目录<input type="text" id="editRootName" maxlength="200"></label>
+          </div>
+        </div>
+
+        <div class="edit-panel" data-edit-panel="tree" hidden>
+          <div class="edit-tree-toolbar">
+            <button class="mini-btn" type="button" id="editTreeAdd" title="为选中的字典或列表添加子项">添加子项</button>
+            <button class="mini-btn danger" type="button" id="editTreeDelete" title="删除选中的节点">删除节点</button>
+            <span class="hint" id="editTreeHint">点击行选中节点；点击值可直接修改，字符串或整数会自动识别</span>
+          </div>
+          <div class="edit-tree" id="editTree"></div>
+        </div>
+
+        <div class="edit-panel" data-edit-panel="raw" hidden>
+          <div class="edit-raw-wrap">
+            <pre class="edit-raw-gutter" id="editRawGutter" aria-hidden="true"></pre>
+            <textarea id="editRawText" spellcheck="false" title="解码后的种子结构，可直接编辑；二进制字段以 {$b64} 表示"></textarea>
+          </div>
+          <p class="hint">这是解码后的原始结构，可直接编辑 JSON 后保存；保存时会重新编码为 .torrent。二进制字段以 <code>{"$b64":"…"}</code> 表示。</p>
+        </div>
+
+        <div class="import-actions">
+          <span class="edit-hash" id="editHashText">Info Hash：—</span>
+          <span class="edit-warning" id="editHashWarning" hidden>修改名称/文件路径/树结构会改变 Info Hash</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="selection-bar" id="selectionBar">
+  <span class="selection-label" id="selectionLabel">已选 0 项</span>
+  <div class="selection-actions" id="ed2kSelectionActions">
+    <button class="btn btn-primary btn-sm" id="copyAllBtn" type="button" title="复制全部已生成链接"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>复制全部</button>
+    <button class="btn btn-secondary btn-sm" id="exportAllBtn" type="button" title="导出全部已生成链接为 TXT"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>导出 TXT</button>
+    <button class="btn btn-secondary btn-sm" id="push115LinksBtn" type="button" title="创建种子并通过磁力链推送到 115 离线；有选中项时仅推送所选"><svg class="icon" aria-hidden="true"><use href="#i-cloud"/></svg>推送 115 离线</button>
+    <span class="bar-qb" id="ed2kBarQb"></span>
+    <button class="btn btn-secondary btn-sm" id="rehashBtn" type="button" title="重新计算 ED2K 哈希；有选中项时仅重算所选"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>重新计算</button>
+    <button class="btn btn-danger-ghost btn-sm" id="deleteSelectedBtn" type="button" title="没有选中项时移除全部文件，有选中项时仅移除所选"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>移除</button>
+  </div>
+  <div class="selection-actions" id="makeSelectionActions" hidden>
+    <button class="btn btn-secondary btn-sm" id="torrentSelectAll" type="button" title="没有选中项时全选，已有选中项时取消全选"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span id="torrentSelectAllLabel">全选</span></button>
+    <button class="btn btn-danger-ghost btn-sm" id="torrentRemoveBtn" type="button" title="没有选中项时移除全部制作文件，有选中项时仅移除所选"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>移除</button>
+    <span class="bar-sep"></span>
+    <button class="btn btn-primary btn-sm" id="generateTorrentBtn" type="button" title="用所选文件生成 .torrent"><svg class="icon" aria-hidden="true"><use href="#i-magnet"/></svg>生成 .torrent</button>
+    <a class="btn btn-secondary btn-sm" id="makeBarDownload" href="#" download hidden title="下载刚生成的 .torrent 文件"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>下载 .torrent</a>
+    <span class="bar-qb" id="makeBarQb"></span>
+    <button class="btn btn-secondary btn-sm" id="makeBarPush115" type="button" data-push="115" hidden title="把生成的种子推送到 115 离线"><svg class="icon" aria-hidden="true"><use href="#i-cloud"/></svg>推送 115 离线</button>
+    <button class="btn btn-secondary btn-sm" id="makeBarMagnet" type="button" data-copy-magnet="" hidden title="复制生成的磁力链"><svg class="icon" aria-hidden="true"><use href="#i-magnet"/></svg>复制磁力链</button>
+  </div>
+  <div class="selection-actions" id="editSelectionActions" hidden>
+    <button class="btn btn-secondary btn-sm" id="editSelectAll" type="button" title="没有选中项时全选，已有选中项时取消全选"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span id="editSelectAllLabel">全选</span></button>
+    <button class="btn btn-secondary btn-sm" id="editSelectNone" type="button" title="清空当前选择"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>清空</button>
+    <button class="btn btn-danger-ghost btn-sm" id="editRemoveBtn" type="button" title="没有选中项时清空已载入列表，有选中项时仅移除所选"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>移除</button>
+    <span class="bar-sep"></span>
+    <button class="btn btn-primary btn-sm" id="editSaveBtn" type="button" title="保存并将编辑后的种子下载到本地"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>保存并下载</button>
+  </div>
+  <div class="selection-actions" id="parseSelectionActions" hidden>
+    <button class="btn btn-primary btn-sm" id="parseBarCopy" type="button" title="复制所选文件的 ED2K 链接"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>复制链接</button>
+    <button class="btn btn-secondary btn-sm" id="parseBarExport" type="button" title="导出所选链接为 TXT"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>导出 TXT</button>
+    <button class="btn btn-secondary btn-sm" id="parseBarPush115" type="button" title="把所选链接推送到 115 离线"><svg class="icon" aria-hidden="true"><use href="#i-cloud"/></svg>推送 115</button>
+  </div>
+</div>
+
+<div class="upload-panel" id="uploadPanel" hidden aria-live="polite">
+  <div class="upload-panel-head">
+    <span class="upload-title" id="uploadTitle">正在添加文件</span>
+    <span class="upload-panel-actions">
+      <button class="mini-btn" id="uploadPauseBtn" type="button" title="暂停或继续上传">暂停</button>
+      <button class="mini-btn danger" id="uploadCancelBtn" type="button" title="取消本次文件添加">取消</button>
+    </span>
+  </div>
+  <div class="upload-meta">
+    <span id="uploadCount">0 / 0 项</span>
+    <span id="uploadPercent">0%</span>
+  </div>
+  <div class="progress-track upload-overall"><span id="uploadOverallBar"></span></div>
+  <div class="upload-current">
+    <span class="upload-current-name" id="uploadCurrentName">准备中…</span>
+    <span class="upload-current-pct" id="uploadCurrentPct"></span>
+  </div>
+  <div class="progress-track upload-file" id="uploadFileTrack" hidden><span id="uploadFileBar"></span></div>
+</div>
+
+<input type="file" id="fileInput" multiple hidden>
+<input type="file" id="folderInput" webkitdirectory directory multiple hidden>
+<input type="file" id="parseFolderInput" webkitdirectory directory multiple hidden>
+<input type="file" id="editInput" accept=".torrent,application/x-bittorrent" multiple hidden>
+
+<div id="modalRoot"></div>
+<div id="toastRoot" class="toast-root" aria-live="polite"></div>
+
+<script src="/app.js"></script>
+</body>
+</html>
