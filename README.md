@@ -122,6 +122,38 @@ docker compose pull && docker compose up -d
 
 用 `docker run` 部署时，先 `docker rm -f linkseed` 再重新执行原命令。
 
+### 一键卸载
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/kin-w/LinkSeed/main/uninstall.sh) -y
+```
+
+默认只停止并删除容器、删除 compose 文件，**数据目录与镜像保留**，方便以后重装。
+
+| 参数 | 说明 | 默认值 |
+|---|---|---|
+| `-n` | 容器名称 | `linkseed` |
+| `-c` | 数据存放目录 | `/opt/linkseed/data` |
+| `-d` | 同时删除数据目录（上传文件、历史、设置都会丢） | 关闭 |
+| `-i` | 同时删除 Docker 镜像 | 关闭 |
+| `-y` | 跳过确认 | 关闭 |
+| `-h` | 显示帮助 | — |
+
+彻底清理（容器 + 数据 + 镜像）：
+
+```bash
+bash uninstall.sh -y -d -i
+```
+
+用 `docker compose` 或 `docker run` 手动部署的，也可以直接：
+
+```bash
+docker rm -f linkseed
+# 需要彻底清理时再执行
+rm -rf ./data
+docker rmi ikimi/linkseed:latest
+```
+
 ### 路径对应
 
 容器里的 `/` 是镜像自己的文件系统，宿主机根目录挂在 `/host`：
