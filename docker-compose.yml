@@ -1,0 +1,33 @@
+services:
+  linkseed:
+    build: .
+    image: linkseed:latest
+    container_name: linkseed
+    restart: unless-stopped
+    ports:
+      - "5566:5566"
+    environment:
+      TZ: Asia/Shanghai
+      ED2K_PORT: "5566"
+      # 访问密码，留空则关闭登录（建议务必修改）
+      ED2K_PASSWORD: "改成你的密码"
+      # 允许在界面中浏览的服务器目录（容器内路径），默认 /host
+      ED2K_ROOTS: /host
+      # 同时计算的文件数量，机械硬盘建议 1-2
+      ED2K_HASH_WORKERS: "2"
+      # 单文件大小限制（字节），0 表示不限制
+      ED2K_MAX_FILE_SIZE: "0"
+    volumes:
+      # 上传的文件、索引与生成的种子都保存在这里
+      - ./data:/data
+      # 宿主机根目录只读挂载为 /host，界面中可直接选择服务器文件生成链接
+      # 若只想开放部分目录，例如：- /home/media:/host:ro
+      - /:/host:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5566/api/health', timeout=2)"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
