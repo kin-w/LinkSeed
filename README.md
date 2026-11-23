@@ -46,7 +46,48 @@
 
 ## 快速开始
 
-### docker compose（推荐）
+### 一键部署（推荐）
+
+在服务器上以 root 执行，脚本会自动安装 Docker、拉取镜像、生成 compose 并启动：
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/kin-w/LinkSeed/main/install.sh) -p 你的访问密码
+```
+
+也可以用 wget：
+
+```bash
+bash <(wget -qO- https://raw.githubusercontent.com/kin-w/LinkSeed/main/install.sh) -p 你的访问密码
+```
+
+默认全盘模式（宿主机 `/` 以只读方式挂载到容器 `/host`），执行完会直接打印访问地址和密码。
+
+常用组合：
+
+```bash
+# 只开放媒体目录，端口改成 9000
+bash install.sh -p mypass -P 9000 -d /home/media
+
+# 使用镜像加速 + 自定义数据目录
+bash install.sh -p mypass -m docker.1panel.live -c /root/linkseed/data
+```
+
+| 参数 | 说明 | 默认值 |
+|---|---|---|
+| `-p` | 访问密码 | 不填则随机生成并打印 |
+| `-P` | Web 端口 | `5566` |
+| `-d` | 挂载的宿主机目录（只读） | `/`（全盘模式） |
+| `-c` | 数据存放目录 | `/opt/linkseed/data` |
+| `-n` | 容器名称 | `linkseed` |
+| `-u` | Docker Hub 用户名 | `ikimi` |
+| `-T` | 镜像标签 | `latest` |
+| `-m` | 镜像加速前缀 | 空 |
+| `-t` | 时区 | `Asia/Shanghai` |
+| `-h` | 显示帮助 | — |
+
+脚本可重复执行：检测到同名容器会先删除再重建，数据目录保留，上传文件、历史与设置不会丢。
+
+### docker compose
 
 仓库根目录的 [docker-compose.yml](docker-compose.yml) 已给出完整配置，启动前先修改访问密码：
 
